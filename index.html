@@ -18,6 +18,7 @@
       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
       crossorigin=""
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script
       defer
@@ -26,11 +27,21 @@
       crossorigin=""
     ></script>
     <script defer src="script.js"></script>
+    <script
+      src="https://kit.fontawesome.com/3cb4c33903.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
     <div class="sidebar">
-      <h1>Let's Track Your Fitness Journey!</h1>
+      <h1>SORE TODAY, STRONG TOMORROW</h1>
+      <section class="location">
+        <div class= ><i class="fa fa-map-marker" style="font-size: small;">&ensp;</i><span class="city"></span><br>
+          <i class="fa fa-calendar" style="font-size: small;">&ensp;</i><span class="date"></span><br>
+            <span class="current temp"></span></div>
+      
+        </section>
       <ul class="workouts">
         <form class="form hidden">
           <div class="form__row">
@@ -72,5 +83,7 @@
     </div>
 
     <div id="map"></div>
+
+    
   </body>
 </html>
