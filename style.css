@@ -7,6 +7,7 @@
   --color-light--1: #aaa;
   --color-light--2: #ececec;
   --color-light--3: rgb(214, 222, 224);
+  --gradient-primary: linear-gradient(to top left, #39b385, #9be15d);
 }
 
 * {
@@ -54,25 +55,45 @@ section {
 }
 
 h1 {
+  flex: 1;
   height: 5.2rem;
   align-self: center;
   color: white;
   margin-bottom: 3rem;
-  font-size: 24px;
+  font-size: 27.1px;
   text-shadow: 2px 3px grey;
+  z-index: 2;
+}
+
+.highlight {
+  position: relative;
   
+}
+
+.highlight::after {
+  display: block;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  opacity: 0.7;
+  transform: scale(1.03, 1.05) skewX(-15deg);
+  background-image: linear-gradient(to top left, #5ec29c, #b9dd9a);
 }
 
 .location{
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 2rem;
   font-family: 'Oswald';
 }
 
 .date{
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   padding-bottom: 8rem;
   font-family: 'Oswald';
 }
