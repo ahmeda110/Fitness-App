@@ -124,11 +124,11 @@ class App {
             .setPopupContent(`${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`)
             .openPopup();
 
-            this.#markers.push(marker);
+        this.#markers.push(marker);
     }
 
     _renderWorkout(workout) {
-            let html = `
+        let html = `
                 <li class="workout--container">
                   <form class="edit--workout form">
                     <div class="form__row">
@@ -198,9 +198,9 @@ class App {
                       <span class="workout__value ">${workout.duration}</span>
                       <span class="workout__unit">min</span>
                     </div>`;
-        
-            if (workout.type === 'running')
-              html += `
+
+        if (workout.type === 'running')
+            html += `
                     <div class="workout__details">
                       <span class="workout__icon"></span>
                       <span class="workout__value ">${workout.pace.toFixed(1)}</span>
@@ -213,9 +213,9 @@ class App {
                     </div>
                   </div>
                 </li>`;
-        
-            if (workout.type === 'cycling')
-              html += `
+
+        if (workout.type === 'cycling')
+            html += `
                     <div class="workout__details">
                       <span class="workout__icon"></span>
                       <span class="workout__value ">${workout.speed.toFixed(1)}</span>
@@ -228,8 +228,8 @@ class App {
                     </div>
                   </div>
                 </li>`;
-        
-            form.insertAdjacentHTML('afterend', html);
+
+        form.insertAdjacentHTML('afterend', html);
     }
 
 
@@ -253,84 +253,78 @@ class App {
         const workoutEl = e.target.closest('.workout');
         const editForm = e.target.closest('form.edit--workout');
         const formNewWorkout = e.target.closest('form.new--workout');
-    
+
         if (this.formNewWorkoutVisible && !formNewWorkout) {
-          this.formNewWorkoutVisible = false;
-          this._hideForm(true);
+            this.formNewWorkoutVisible = false;
+            this._hideForm(true);
         }
-    
+
         if (!btnElement && !workoutEl) return;
         if (editForm) return;
-    
+
         const workout = this.#workouts.find(
-          work => work.id === workoutEl.dataset.id
+            work => work.id === workoutEl.dataset.id
         );
-    
+
         if (btnElement) {
-          if (btnElement.dataset.type === 'edit')
-            this._showWorkoutEditor(workoutEl);
-          else this._deleteWorkout(workout);
+            if (btnElement.dataset.type === 'edit')
+                this._showWorkoutEditor(workoutEl);
+            else this._deleteWorkout(workout);
         } else {
-          this.#my_map.setView(workout.coords, 15, {
-            animate: true,
-            pan: {
-              duration: 1,
-            },
-          });
+            this.#my_map.setView(workout.coords, 15, {
+                animate: true,
+                pan: {
+                    duration: 1,
+                },
+            });
         }
-      }
+    }
 
     reset() {
         window.localStorage.removeItem('workouts');
         window.location.reload();
-      }
+    }
 
     _showWorkoutEditor(el) {
-        
+
         const editor = el
-          .closest('.workout--container')
-          .querySelector('.edit--workout');
-    
+            .closest('.workout--container')
+            .querySelector('.edit--workout');
+
         editor.style.transform = 'translateX(0%)';
         el.classList.add('hidden');
-      }
+    }
 
     _deleteWorkout(workout) {
         const check = confirm('Are you sure you want to delete this workout?');
-    
+
         if (!check) return;
-    
+
         const delEl = document.querySelector(`.workout[data-id='${workout.id}']`);
         const delObj = this.#workouts.find(obj => obj.id === delEl.dataset.id);
         const delobjIndex = this.#workouts.indexOf(delObj);
         const markerObj = this.#markers.find(
-          obj => obj._leaflet_id === delObj.markerId
+            obj => obj._leaflet_id === delObj.markerId
         );
         const ms =
-          window.getComputedStyle(delEl).transitionDuration.slice(0, -1) * 1000;
-    
+            window.getComputedStyle(delEl).transitionDuration.slice(0, -1) * 1000;
+
         // Delete from Object and memory
         this.#workouts.splice(delobjIndex, 1);
         this._setLocalStorage();
-    
+
         // Delete from Workout list
         delEl.style.opacity = 0;
         window.setTimeout(() => delEl.closest('.workout--container').remove(), ms);
-    
+
         // Delete from Map
         markerObj.remove();
-      }
-      _deleteAllWorkouts() {
-        document.querySelectorAll('.workout').forEach(function (work) {
-          console.log(work);
+    }
+    _deleteAllWorkouts() {
+        document.querySelectorAll('.workout').forEach(function(work) {
+            console.log(work);
         });
-      }
-
-
-
-
-
-
+    }
 
 
 
@@ -339,7 +333,7 @@ class App {
 
 class Workout {
     date = new Date();
-    id = (Date.now() + '').slice(-10); 
+    id = (Date.now() + '').slice(-10);
     c = [];
 
     constructor(coords, distance, duration) {
@@ -348,13 +342,13 @@ class Workout {
         this.duration = duration;
     }
 
-    cityAndCountry(coords){
-            const [latitude, longitude] = coords;
-            let result;
-    
-            fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json`)
+    cityAndCountry(coords) {
+        const [latitude, longitude] = coords;
+        let result;
+
+        fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json`)
             .then(res => {
-                if(!res.ok) throw new Error(`Location not found (${res.status}`);
+                if (!res.ok) throw new Error(`Location not found (${res.status}`);
                 else return res.json();
             })
             .then(data => {
@@ -362,13 +356,13 @@ class Workout {
             })
             .catch(err =>
                 console.error(err));
-                
+
     }
 
 
-    _setDescription(coords){
+    _setDescription(coords) {
         this.cityAndCountry(coords);
-        
+
 
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)}  on
@@ -431,7 +425,7 @@ function displayResults(weather) {
     let temp = document.querySelector('.current');
     temp.innerHTML = `${Math.round(weather.main.temp)}<span>°c</span>`;
 
-   
+
 }
 
 function dateBuilder(d) {
@@ -453,4 +447,3 @@ function dateBuilder(d) {
 
     return `${day}, ${date}/${month + 1}/${year}`;
 }
-
